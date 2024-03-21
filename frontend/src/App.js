@@ -4,7 +4,7 @@ import CreatePlaylistPage from "./pages/createPlaylist";
 
 function App() {
   const CLIENT_ID = "08d52968d40a4cb999ddd47d784b5ac5";
-  const REDIRECT_URI = "http://localhost:3000";
+  const REDIRECT_URI = "http://localhost:8084";
   const AUTH_ENDPOINT = "https://accounts.spotify.com/authorize";
   const RESPONSE_TYPE = "token";
 
