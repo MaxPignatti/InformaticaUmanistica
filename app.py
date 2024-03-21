@@ -11,7 +11,7 @@ app.mount("/static", StaticFiles(directory="/content/InformaticaUmanistica/front
 # Route per la home page
 @app.get("/", response_class=HTMLResponse)
 async def serve():
-    with open("/content/InformaticaUmanistica/frontend/build/index.html", "r") as file:
+    with open("frontend/build/index.html", "r") as file:
         return file.read()
 
 # Route per gestire le richieste POST all'endpoint /api/sendText
