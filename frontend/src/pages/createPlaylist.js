@@ -6,8 +6,8 @@ function CreatePlaylistPage() {
 
   const handleSend = async () => {
     try {
-      const response = await apiClient.post("URL_DI_DESTINAZIONE", { text });
-      console.log(response.data); // Gestisci la risposta come preferisci
+      const response = await apiClient.post("/api/sendText", { text });
+      console.log(response.data);
     } catch (error) {
       console.error(error); // Gestisci errori di rete o risposte con status code 4xx/5xx
     }
