@@ -1,6 +1,5 @@
-from fastapi import FastAPI, Request
-from fastapi.responses import HTMLResponse, JSONResponse
-from fastapi.staticfiles import StaticFiles
+from fastapi import FastAPI, HTTPException
+from fastapi.responses import HTMLResponse
 import os
 
 app = FastAPI()
@@ -11,8 +10,13 @@ app.mount("/static", StaticFiles(directory="./frontend/build/static"), name="sta
 # Route per la home page
 app.get("/", response_class=HTMLResponse)
 async def serve():
-    with open("frontend/build/index.html", "r") as file:
-        return file.read()
+    try:
+        with open("frontend/build/index.html", "r") as file:
+            return file.read()
+    except FileNotFoundError:
+        raise HTTPException(status_code=404, detail="File not found")
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
 
 # Route per gestire le richieste POST all'endpoint /api/sendText
 app.post("/api/sendText")
