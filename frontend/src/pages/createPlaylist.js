@@ -1,12 +1,16 @@
 import { useState } from "react";
 import apiClient from "../api/axios";
+import axios from axios
 
 function CreatePlaylistPage() {
   const [text, setText] = useState("");
 
   const handleSend = async () => {
     try {
-      const response = await apiClient.post("/api/sendText", { text });
+      const response = await axios.post(
+        "https://provainfouman.vercel.app/api/sendText",
+        { text }
+      );
       console.log(response.data);
     } catch (error) {
       console.error(error);
