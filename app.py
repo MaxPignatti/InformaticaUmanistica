@@ -9,7 +9,7 @@ app = FastAPI()
 app.mount("/static", StaticFiles(directory="./frontend/build/static"), name="static")
 
 # Route per la home page
-@app.get("/", response_class=HTMLResponse)
+@app.get("/", response_class=JSONResponse)
 async def serve():
     try:
         with open("frontend/build/index.html", "r") as file:
