@@ -11,22 +11,21 @@ function App() {
   const [token, setToken] = useState("");
 
   useEffect(() => {
-    const hash = window.location.hash;
-    let token = window.sessionStorage.getItem("token");
+    const tokenFromSessionStorage = window.sessionStorage.getItem("token");
 
-    if (!token && hash) {
-      token = hash
-        .substring(1)
-        .split("&")
-        .find(elem => elem.startsWith("access_token"))
-        .split("=")[1];
-
-      window.location.hash = "";
-      window.sessionStorage.setItem("token", token);
+    if (!token && tokenFromSessionStorage) {
+      setToken(tokenFromSessionStorage);
     }
 
-    setToken(token);
-  }, []);
+    const hash = window.location.hash.substring(1);
+    const hashParams = new URLSearchParams(hash);
+    const accessToken = hashParams.get('access_token');
+
+    if (accessToken && !tokenFromSessionStorage) {
+      setToken(accessToken);
+      window.sessionStorage.setItem("token", accessToken);
+    }
+}, []);
 
   const logout = () => {
     setToken("");
