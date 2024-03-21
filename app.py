@@ -9,13 +9,13 @@ app = FastAPI()
 app.mount("/static", StaticFiles(directory="./frontend/build/static"), name="static")
 
 # Route per la home page
-@app.get("/", response_class=HTMLResponse)
+app.get("/", response_class=HTMLResponse)
 async def serve():
     with open("frontend/build/index.html", "r") as file:
         return file.read()
 
 # Route per gestire le richieste POST all'endpoint /api/sendText
-@app.post("/api/sendText")
+app.post("/api/sendText")
 async def hello(request: Request):
     data = await request.json()
     text = data.get('text')
