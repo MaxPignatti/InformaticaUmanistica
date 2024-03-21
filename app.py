@@ -8,8 +8,18 @@ app = FastAPI()
 # Serve i file statici dalla cartella build
 app.mount("/static", StaticFiles(directory="./frontend/build/static"), name="static")
 
+app.get("/manifest.json", response_class=JSONResponse)
+async def serve_manifest():
+    try:
+        with open("frontend/build/manifest.json", "r") as file:
+            return JSONResponse(content=file.read())
+    except FileNotFoundError:
+        raise HTTPException(status_code=404, detail="File manifest.json not found")
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+    
 # Route per la home page
-@app.get("/", response_class=HTMLResponse)
+app.get("/", response_class=HTMLResponse)
 async def serve():
     try:
         with open("frontend/build/index.html", "r") as file:
