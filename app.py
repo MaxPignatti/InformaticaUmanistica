@@ -22,7 +22,7 @@ def hello():
     return jsonify({"HELLO!"})
 
 # Route for handling API requests via POST
-@app.route('/sendText', methods=['POST'])
+@app.route('/api/sendText', methods=['POST'])
 def handle_post():
     # Get the data from the POST request
     data = request.json
