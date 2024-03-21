@@ -6,7 +6,7 @@ import os
 app = FastAPI()
 
 # Serve i file statici dalla cartella build
-app.mount("/static", StaticFiles(directory="/content/InformaticaUmanistica/frontend/build/static"), name="static")
+app.mount("/static", StaticFiles(directory="/frontend/build/static"), name="static")
 
 # Route per la home page
 @app.get("/", response_class=HTMLResponse)
