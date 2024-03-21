@@ -9,7 +9,7 @@ function CreatePlaylistPage() {
       const response = await apiClient.post("/api/sendText", { text });
       console.log(response.data);
     } catch (error) {
-      console.error(error); // Gestisci errori di rete o risposte con status code 4xx/5xx
+      console.error(error);
     }
   };
 
