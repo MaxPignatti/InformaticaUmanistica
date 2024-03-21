@@ -7,21 +7,9 @@ Original file is located at
     https://colab.research.google.com/drive/1lJCo_cn3Ph2uv00J3lNOlSwm1Sr2uSrV
 """
 
-# Commented out IPython magic to ensure Python compatibility.
-import shutil
-!pip install pygit2==1.12.2
-# %cd /content
-folder_path = "/content/InformaticaUmanistica"
-shutil.rmtree(folder_path, ignore_errors=True)
-!git clone https://github.com/MaxPignatti/InformaticaUmanistica.git
-# %cd /content/InformaticaUmanistica/frontend
-!npm i
-!npm run build
-
-from google.colab import output
-output.serve_kernel_port_as_window(8084)
 
 from flask import Flask, send_from_directory, jsonify, request
+
 import os
 app = Flask(__name__, static_folder='/content/InformaticaUmanistica/frontend/build', static_url_path='')
 
