@@ -15,12 +15,9 @@ def static_proxy(path):
     directory_name = os.path.join(app.static_folder, '/'.join(path.split('/')[:-1]))
     return send_from_directory(directory_name, file_name)
 
-@app.route('/api/sendText',methods=['POST'])
+@app.route('/api/hello',methods=['GET'])
 def hello():
-    data = request.json
-    text = data.get('text')
-    #Usiamo il modello
-    return "YES" #Risposta dal modello (o creiamo la playlist e ritorniamo un success)
+    return jsonify({"HELLO!"}) 
 
 if __name__ == '__main__':
     app.run()
