@@ -1,33 +1,26 @@
-from fastapi import FastAPI, Request, HTTPException
-from fastapi.responses import HTMLResponse, JSONResponse
-from fastapi.staticfiles import StaticFiles
+
+from flask import Flask, send_from_directory, jsonify, request
 import os
+app = Flask(__name__, static_folder='/frontend/build', static_url_path='')
 
-app = FastAPI()
+# Serve the index.html file for the root URL
+@app.route('/')
+def serve():
+    return send_from_directory(app.static_folder, 'index.html')
 
-# Serve i file statici dalla cartella build
-app.mount("/static", StaticFiles(directory="./frontend/build/static"), name="static")
-    
-# Route per la home page
-@app.get("/", response_class=HTMLResponse)
-async def serve():
-    try:
-        with open("frontend/build/index.html", "r") as file:
-            return file.read()
-    except FileNotFoundError:
-        raise HTTPException(status_code=404, detail="File not found")
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+# Serve static files from the build directory
+@app.route('/<path:path>')
+def static_proxy(path):
+    file_name = path.split('/')[-1]
+    directory_name = os.path.join(app.static_folder, '/'.join(path.split('/')[:-1]))
+    return send_from_directory(directory_name, file_name)
 
-# Route per gestire le richieste POST all'endpoint /api/sendText
-@app.post("/api/sendText")
-async def hello(request: Request):
-    data = await request.json()
+@app.route('/api/sendText',methods=['POST'])
+def hello():
+    data = request.json
     text = data.get('text')
-    # Usiamo il modello per elaborare il testo
-    return JSONResponse(content={"message": "YES"})  # Risposta dal modello
+    #Usiamo il modello
+    return "YES" #Risposta dal modello (o creiamo la playlist e ritorniamo un success)
 
-# Esegui l'applicazione FastAPI
-if __name__ == "__main__":
-    import uvicorn
-    uvicorn.run(app)
+if __name__ == '__main__':
+    app.run()

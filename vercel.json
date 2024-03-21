@@ -10,10 +10,6 @@
     {
       "src": "/api/sendText",
       "dest": "/app.py"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/frontend/build/index.html"
     }
   ]
 }
